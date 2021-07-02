@@ -17,26 +17,42 @@ const inventors = [
 // Array.prototype.filter()
 // 1. Filter the array of inventors into a new array containing only the inventors born in the 1500's.
 
-
+let oldInvt = inventors.filter(function(inventor) {
+  return inventor.year >= 1500 && inventor.year < 1600
+});
+console.log(oldInvt)
 
 // Array.prototype.map()
 // 2. Map the array of the inventors into a new array containing objects with just the first and last names as properties.
 
-
+let invNames = inventors.map(function(inventor) {
+  return {first: inventor.first , last: inventor.last}
+});
+console.log(invNames)
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest.
 
-
+let invBday = inventors.sort((a, b) => a.year - b.year)
+console.log(invBday)
 
 // 4. Sort the inventors by years lived from shortest to longest-lived.
 
-
+let invLife = inventors.sort((a, b) => (a.passed - a.year) - (b.passed - b.year))
+console.log(invLife)
 
 // Array.prototype.reduce()
 // 5. Find how many years all the inventors lived combined.
 
+// let invLifeCombined = inventors.reduce((a, b) => a.passed - a.year + b.passed - b.year)
+// let invLifeCombined = inventors.reduce(function(a, b) {  
+//   return YearsLived: (a.passed - a.year) + b.passed - b.year;
+// });
 
+// let totalYears = inventors.reduce((a, b) => {a += (a.passed - a.year) + (b.passed - b.year || 0), 0;
+// });
+let total = inventors.reduce((total, inventor) => total += (inventor.passed-inventor.year), 0)
+console.log(total)
 
 const people = [
   'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry',
@@ -55,6 +71,8 @@ const people = [
 // Array.prototype.map()
 // 6. Map the people array such that the new array consists of strings with the names formatted as "First Last", e.g., "Becker, Carl" should be mapped to "Carl Becker".
 
+let firstLast = people.map((person) => person = person.split(', ').reverse().join(' '));
+console.log(firstLast);
 
 
 const data = [
@@ -66,6 +84,18 @@ const data = [
 // 7. Count the number of instances for each of the data items.
 // Hint: Return an object where the keys are 'car', 'truck', etc., and the value is the total number of times each data item appears.
 
+// let instances = data.reduce((object, instances) => instances[object] += 1);
+let instances = data.reduce(function(a, b) {
+  if(typeof a[b] === 'undefined') {
+    a[b] = 1;
+  } else {
+    a[b] += 1;
+  }
+
+  return a;
+}, {});
+
+console.log(instances);
 
 
 const devs = [
@@ -78,12 +108,26 @@ const devs = [
 // Array.prototype.some()
 // 8. Check if at least one person is 19 or older.
 
+let nineteenPlus = devs.some(function(dev) {
+  let date = new Date();
+  let year = date.getFullYear();
 
+  return dev.year <= year - 19;
+});
+
+console.log(nineteenPlus);
 
 // Array.prototype.every()
 // 9. Check if everyone is 19 or older.
 
+let allAges = devs.every(function(dev, index) {
+  let date = new Date();
+  let year = date.getFullYear();
+  
+  return dev.year <= year - 19;
+});
 
+console.log(allAges);
 
 const comments = [
   { text: 'Love this!', id: 523423 },
@@ -96,8 +140,12 @@ const comments = [
 // Array.prototype.find()
 // 10. Find the comment with the id of 823423.
 
+let findComment = comments.find((comment) => comment.id === 823423);
+console.log(findComment);
 
 
 // Array.prototype.findIndex()
 // 11. Find the index of the comment with an id of 123523.
 
+let findIndex = comments.findIndex((comment) => comment.id === 123523);
+console.log(findIndex);
